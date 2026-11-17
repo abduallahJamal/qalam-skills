@@ -10,7 +10,7 @@
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![Dependencies: 0](https://img.shields.io/badge/Dependencies-Zero-00E5FF)](#جودة-التنفيذ)
 [![Skills: 9](https://img.shields.io/badge/Skills-9-818CF8)](#المهارات)
-[![Tests: 204](https://img.shields.io/badge/Tests-204%20offline-22C55E)](#جودة-التنفيذ)
+[![Tests: 212](https://img.shields.io/badge/Tests-212%20offline-22C55E)](#جودة-التنفيذ)
 [![Gate: 15 checks](https://img.shields.io/badge/Gate-15%20checks-A78BFA)](#بوابة-الجودة)
 [![Agents](https://img.shields.io/badge/Agents-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenCode-38BDF8)](#التثبيت)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B.svg)](LICENSE)

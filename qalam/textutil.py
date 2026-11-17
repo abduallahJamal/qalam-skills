@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Dict, List, Tuple
 
 from .arabic import (
@@ -16,6 +17,17 @@ from .arabic import (
 
 SENTENCE_SPLIT = re.compile(r"(?<=[.!?؟。！？])\s+|\n{2,}")
 WORD_RE = re.compile(r"[\w\u0620-\u064A\u064B-\u065F\u0670'’-]+")
+
+
+def write_text_lf(path: Path, text: str) -> None:
+    """Write UTF-8 text with LF endings on every platform and Python version.
+
+    ``Path.write_text`` only gained the ``newline`` argument in Python 3.10, and
+    the package supports 3.9, so go through ``open`` instead.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as handle:
+        handle.write(text)
 
 
 def word_count(text: str) -> int:

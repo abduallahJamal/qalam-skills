@@ -10,7 +10,7 @@
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![Dependencies: 0](https://img.shields.io/badge/Dependencies-Zero-00E5FF)](#engineering-notes)
 [![Skills: 9](https://img.shields.io/badge/Skills-9-818CF8)](#the-skills)
-[![Tests: 204](https://img.shields.io/badge/Tests-204%20offline-22C55E)](#engineering-notes)
+[![Tests: 212](https://img.shields.io/badge/Tests-212%20offline-22C55E)](#engineering-notes)
 [![Gate: 15 checks](https://img.shields.io/badge/Gate-15%20checks-A78BFA)](#the-gate)
 [![Agents](https://img.shields.io/badge/Agents-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenCode-38BDF8)](#install)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B.svg)](LICENSE)
@@ -77,7 +77,7 @@ qalam-skills/
 ├── demo/                   one end-to-end run you can execute
 ├── examples/               locale checker + Arabic sample app
 ├── docs/                   full guides in Arabic and English
-├── tests/                  204 tests, all offline
+├── tests/                  212 tests, all offline
 └── assets/banner.svg       repository header
 ```
 
@@ -185,7 +185,7 @@ Real defects in a real file. The corrected file returns `no findings`.
 ## 🧪 Engineering notes
 
 - No third-party dependencies, no network calls, no install step beyond Python.
-- 204 tests. Most of them guard defects that actually occurred during development: words dropped when rewrapping subtitles, isolate characters leaking into HTML tags, inline code vanishing from the preview, code fences reported as "untranslated", punctuation polluting translation-memory keys.
+- 212 tests. Most of them guard defects that actually occurred during development: words dropped when rewrapping subtitles, isolate characters leaking into HTML tags, inline code vanishing from the preview, code fences reported as "untranslated", punctuation polluting translation-memory keys.
 - Contract tests over the shipped skills: trigger words in descriptions, every referenced file exists, every CLI subcommand exists, every skill has failure guidance and stays under a length budget.
 - CI runs the suite on Ubuntu, Windows, and macOS across Python 3.9 and 3.12, validates the skills strictly, runs the demo, and fails if the package ever imports a networking module.
 - `python3 demo/run_demo.py` runs the whole pipeline and writes real artefacts.

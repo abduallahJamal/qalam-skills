@@ -14,6 +14,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Tuple
 
+from .textutil import write_text_lf
+
 TEMPLATE = """---
 name: {name}
 description: {description}
@@ -119,16 +121,16 @@ def scaffold(
     (directory / "references").mkdir(parents=True, exist_ok=True)
     files: List[Path] = []
     skill_path = directory / "SKILL.md"
-    skill_path.write_text(body, encoding="utf-8", newline="\n")
+    write_text_lf(skill_path, body)
     files.append(skill_path)
     checklist = directory / "references" / "checklist.md"
-    checklist.write_text(CHECKLIST, encoding="utf-8", newline="\n")
+    write_text_lf(checklist, CHECKLIST)
     files.append(checklist)
     if with_test:
         tests = directory / "tests"
         tests.mkdir(exist_ok=True)
         test_path = tests / f"test_{name.replace('-', '_')}_contract.py"
-        test_path.write_text(TEST_TEMPLATE.format(name=name), encoding="utf-8", newline="\n")
+        write_text_lf(test_path, TEST_TEMPLATE.format(name=name))
         files.append(test_path)
     return ScaffoldResult(directory=directory, files=files)
 

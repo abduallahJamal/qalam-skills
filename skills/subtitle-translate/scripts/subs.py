@@ -29,6 +29,41 @@ VTT_HEADER = "WEBVTT"
 ARABIC = re.compile(r"[\u0620-\u064A]")
 TAGS = re.compile(r"<[^>]+>|\{\\[^}]*\}")
 
+#: ASCII stand-ins used only when the console cannot encode the real character.
+ASCII_FALLBACKS = {
+    "\u2192": "->",
+    "\u2190": "<-",
+    "\u2013": "-",
+    "\u2014": "-",
+    "\u2018": "'",
+    "\u2019": "'",
+    "\u201c": '"',
+    "\u201d": '"',
+    "\u2026": "...",
+}
+
+
+def safe_print(*parts: object, sep: str = " ", end: str = "\n") -> None:
+    """Print without raising on a legacy console (cp437, cp1252, ...).
+
+    ``print`` raises ``UnicodeEncodeError`` when stdout is a Windows code page
+    that lacks the character, which used to abort ``check``/``shift``/``wrap``
+    after the work had already succeeded. The fallback only runs after the real
+    glyphs fail, so UTF-8 terminals are unaffected.
+    """
+    text = sep.join(str(part) for part in parts)
+    try:
+        print(text, end=end)
+        return
+    except UnicodeEncodeError:
+        pass
+    flattened = "".join(ASCII_FALLBACKS.get(char, char) for char in text)
+    try:
+        print(flattened, end=end)
+    except UnicodeEncodeError:
+        encoding = getattr(sys.stdout, "encoding", None) or "ascii"
+        print(flattened.encode(encoding, "replace").decode(encoding), end=end)
+
 
 @dataclass
 class Cue:
@@ -315,22 +350,22 @@ def command_stats(args: argparse.Namespace) -> int:
     cues, _is_vtt = read(args.file)
     report = stats(cues)
     if args.json:
-        print(json.dumps(report, ensure_ascii=False, indent=2))
+        safe_print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0
     for key, value in report.items():
-        print(f"{key:18} {value}")
+        safe_print(f"{key:18} {value}")
     findings = lint(
         cues,
         max_chars=args.chars,
         max_cps=args.cps,
         hard_cps=args.hard_cps,
     )
-    print()
-    print(f"errors: {len(findings.errors)}  warnings: {len(findings.warnings)}")
+    safe_print()
+    safe_print(f"errors: {len(findings.errors)}  warnings: {len(findings.warnings)}")
     for message in findings.errors[:20]:
-        print("  error", message)
+        safe_print("  error", message)
     for message in findings.warnings[:20]:
-        print("  warn ", message)
+        safe_print("  warn ", message)
     return 1 if findings.errors else 0
 
 
@@ -347,13 +382,13 @@ def command_check(args: argparse.Namespace) -> int:
         comparison = compare(source_cues, target_cues)
         findings.errors.extend(comparison.errors)
     else:
-        print("note: cue counts may differ because --allow-split is set")
-    print(f"source cues: {len(source_cues)}  target cues: {len(target_cues)}")
-    print(f"errors: {len(findings.errors)}  warnings: {len(findings.warnings)}")
+        safe_print("note: cue counts may differ because --allow-split is set")
+    safe_print(f"source cues: {len(source_cues)}  target cues: {len(target_cues)}")
+    safe_print(f"errors: {len(findings.errors)}  warnings: {len(findings.warnings)}")
     for message in findings.errors:
-        print("  error", message)
+        safe_print("  error", message)
     for message in findings.warnings[:40]:
-        print("  warn ", message)
+        safe_print("  warn ", message)
     return 1 if findings.errors else 0
 
 
@@ -372,7 +407,7 @@ def command_shift(args: argparse.Namespace) -> int:
         for cue in cues
     ]
     write(args.out, shifted, is_vtt)
-    print(f"shifted {len(shifted)} cue(s) by {args.by:+.3f}s → {args.out}")
+    safe_print(f"shifted {len(shifted)} cue(s) by {args.by:+.3f}s → {args.out}")
     return 0
 
 
@@ -391,16 +426,16 @@ def command_wrap(args: argparse.Namespace) -> int:
     ]
     write(args.out, rewrapped, is_vtt)
     changed = sum(1 for a, b in zip(cues, rewrapped) if a.text != b.text)
-    print(f"rewrapped {changed} of {len(cues)} cue(s) → {args.out}")
+    safe_print(f"rewrapped {changed} of {len(cues)} cue(s) → {args.out}")
     return 0
 
 
 def command_dump(args: argparse.Namespace) -> int:
     cues, _ = read(args.file)
     for cue in cues:
-        print(f"{cue.index:4} {format_timestamp(cue.start_ms)} {cue.duration:5.2f}s {cue.cps():5.1f}cps")
+        safe_print(f"{cue.index:4} {format_timestamp(cue.start_ms)} {cue.duration:5.2f}s {cue.cps():5.1f}cps")
         for line in cue.lines:
-            print("     |", line)
+            safe_print("     |", line)
     return 0
 
 

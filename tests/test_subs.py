@@ -264,5 +264,74 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(payload["cues"], 3)
 
 
+class LegacyConsoleTests(unittest.TestCase):
+    """The commands must survive a console that cannot encode the arrow glyph.
+
+    CI caught this on Windows: ``shift``/``wrap``/``check`` printed U+2192 to a
+    cp437 stdout, the ``UnicodeEncodeError`` escaped, and a command that had
+    already written its output file exited with a traceback instead of 0.
+    """
+
+    class _Cp437Stream:
+        encoding = "cp437"
+
+        def __init__(self):
+            self.text = ""
+
+        def write(self, value):
+            value.encode("cp437")  # raise exactly like a real legacy console
+            self.text += value
+            return len(value)
+
+        def flush(self):
+            pass
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        self.source = self.root / "in.srt"
+        self.source.write_text(SRT, encoding="utf-8")
+        self.stream = self._Cp437Stream()
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def _run(self, argv):
+        original = sys.stdout
+        sys.stdout = self.stream
+        try:
+            return subs.main(argv)
+        finally:
+            sys.stdout = original
+
+    def test_shift_writes_file_on_ascii_console(self):
+        out = self.root / "shifted.srt"
+        self.assertEqual(self._run(["shift", str(self.source), "--by", "1.25", "--out", str(out)]), 0)
+        self.assertTrue(out.exists())
+        self.assertIn("shifted", self.stream.text)
+        self.assertNotIn("\u2192", self.stream.text)
+
+    def test_wrap_writes_file_on_ascii_console(self):
+        out = self.root / "wrapped.srt"
+        self.assertEqual(self._run(["wrap", str(self.source), "--chars", "32", "--out", str(out)]), 0)
+        self.assertTrue(out.exists())
+
+    def test_check_reports_on_ascii_console(self):
+        mismatched = self.root / "target.srt"
+        mismatched.write_text(
+            SRT.replace("00:00:01,000 --> 00:00:03,000", "00:00:02,000 --> 00:00:03,000"),
+            encoding="utf-8",
+        )
+        self.assertEqual(self._run(["check", str(self.source), str(mismatched)]), 1)
+        self.assertIn("timing changed", self.stream.text)
+
+    def test_arabic_text_does_not_crash_ascii_console(self):
+        target = self.root / "arabic.srt"
+        target.write_text(SRT.replace("Hello there.", "مرحبا بكم في هذا الاختبار."), encoding="utf-8")
+        # The Arabic glyphs cannot be encoded at all; the command must still
+        # finish and report, not raise.
+        self.assertIn(self._run(["check", str(self.source), str(target)]), (0, 1))
+
+
 if __name__ == "__main__":
     unittest.main()

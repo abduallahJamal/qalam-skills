@@ -16,7 +16,7 @@ qalam-skills/
 ├── qalam/            Python package (stdlib only, no network)
 ├── bin/qalam         run straight from a checkout
 ├── demo/             one end-to-end run you can execute
-└── tests/            204 tests, all offline
+└── tests/            212 tests, all offline
 ```
 
 ---
@@ -154,7 +154,7 @@ Real defects in a real file. The corrected file returns `no findings`.
 ## Engineering notes
 
 - No third-party dependencies, no network calls, no install step beyond Python.
-- 204 tests. Most of them guard defects that actually occurred during development:
+- 212 tests. Most of them guard defects that actually occurred during development:
   words dropped when rewrapping subtitles, isolate characters leaking into HTML
   tags, inline code vanishing from the preview, code fences reported as
   "untranslated", punctuation polluting translation-memory keys.

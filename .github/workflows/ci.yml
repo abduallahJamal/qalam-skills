@@ -16,7 +16,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python: ["3.9", "3.12"]
+        python: ["3.10", "3.12"]
+        include:
+          # 3.9 is the declared floor, but GitHub no longer publishes it for the
+          # current ubuntu-latest (26.04). Pin the oldest still-supported image
+          # so the floor keeps being tested instead of silently skipped.
+          - os: ubuntu-22.04
+            python: "3.9"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

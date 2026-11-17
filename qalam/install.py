@@ -32,6 +32,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
+from .textutil import write_text_lf
+
 TOOL_PATHS: Dict[str, Dict[str, str]] = {
     "claude": {"user": "~/.claude/skills", "project": ".claude/skills"},
     "codex": {"user": "~/.codex/skills", "project": ".codex/skills"},
@@ -306,8 +308,7 @@ def write_cursor_rule(project_root: Path, dry_run: bool = False) -> Optional[Pat
     rule = project_root / ".cursor" / "rules" / "qalam.mdc"
     if dry_run:
         return rule
-    rule.parent.mkdir(parents=True, exist_ok=True)
-    rule.write_text(CURSOR_RULE, encoding="utf-8", newline="\n")
+    write_text_lf(rule, CURSOR_RULE)
     return rule
 
 
