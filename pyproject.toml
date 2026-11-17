@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qalam-skills"
+version = "1.0.0"
+description = "Arabic-first skill pack for coding agents: translation, RTL, terminology, and translation QA."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Abduallah Jamal" }]
+keywords = ["agent-skills", "arabic", "translation", "rtl", "localization", "claude-code", "codex", "cursor", "opencode"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: Arabic",
+  "Topic :: Text Processing :: Linguistic",
+]
+dependencies = []
+
+[project.scripts]
+qalam = "qalam.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/abduallahJamal/qalam-skills"
+Repository = "https://github.com/abduallahJamal/qalam-skills"
+Issues = "https://github.com/abduallahJamal/qalam-skills/issues"
+Changelog = "https://github.com/abduallahJamal/qalam-skills/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+packages = ["qalam"]
+
+[tool.setuptools.package-data]
+qalam = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"

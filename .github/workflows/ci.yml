@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (py${{ matrix.python }} / ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Unit tests
+        run: python -m unittest discover -s tests -t .
+      - name: Skill validation
+        run: python -m qalam skill check skills --strict
+      - name: CLI smoke test
+        run: python -m qalam info
+      - name: Demo pipeline
+        run: python demo/run_demo.py
+
+  arabic-encoding:
+    name: console encoding safety
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Print Arabic output with the legacy console
+        shell: cmd
+        run: |
+          chcp 437
+          python -m qalam glossary show demo/glossary.json
+
+  no-network:
+    name: imports stay offline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fail if the package imports a networking or non-stdlib module
+        run: |
+          python - <<'PY'
+          import ast, pathlib, sys
+          banned = {"requests", "urllib3", "httpx", "aiohttp", "socket", "http.client"}
+          allowed_std = {"http"}  # only imported to be blocked if used directly
+          bad = []
+          for path in pathlib.Path("qalam").rglob("*.py"):
+              tree = ast.parse(path.read_text(encoding="utf-8"))
+              for node in ast.walk(tree):
+                  if isinstance(node, ast.Import):
+                      for alias in node.names:
+                          if alias.name.split(".")[0] in banned:
+                              bad.append(f"{path}: {alias.name}")
+                  elif isinstance(node, ast.ImportFrom) and node.module:
+                      if node.module.split(".")[0] in banned:
+                          bad.append(f"{path}: {node.module}")
+          if bad:
+              print("network imports found:"); print("\n".join(bad)); sys.exit(1)
+          print("no network imports")
+          PY

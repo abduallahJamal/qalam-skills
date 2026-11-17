@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "terms": [
+    {"source": "parse pipeline", "target": "خط التحليل", "category": "technical",
+     "aliases": ["parser pipeline"], "gender": "masculine", "confidence": "high",
+     "frequency": 0, "keep_as_is": false, "notes": ""},
+    {"source": "parsed tree", "target": "الشجرة المحللة", "category": "technical",
+     "aliases": ["tree"], "gender": "feminine", "confidence": "high",
+     "frequency": 0, "keep_as_is": false, "notes": ""},
+    {"source": "cache hit", "target": "إصابة ذاكرة التخزين المؤقت", "category": "technical",
+     "aliases": [], "gender": "feminine", "confidence": "medium",
+     "frequency": 0, "keep_as_is": false, "notes": ""},
+    {"source": "SHA-256", "target": "SHA-256", "category": "technical",
+     "aliases": [], "gender": "unknown", "confidence": "high",
+     "frequency": 0, "keep_as_is": true, "notes": "algorithm name"}
+  ]
+}

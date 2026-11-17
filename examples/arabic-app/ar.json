@@ -1,0 +1,15 @@
+{
+  "app.name": "دفتر",
+  "nav.dashboard": "لوحة التحكم",
+  "nav.reports": "التقارير",
+  "greeting": "مرحبًا بعودتك، {{name}}",
+  "cart.items": "{count, plural, zero {لا عناصر} one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}}",
+  "files.selected": "{count, plural, zero {لا ملفات محددة} one {ملف واحد محدد} two {ملفان محددان} few {# ملفات محددة} many {# ملفًا محددًا} other {# ملف محدد}}",
+  "error.network": "تعذّر الوصول إلى الخادم. تحقّق من اتصالك ثم حاول مرة أخرى.",
+  "error.required": "هذا الحقل مطلوب",
+  "action.save": "حفظ",
+  "action.cancel": "إلغاء",
+  "action.delete": "حذف",
+  "settings.language": "اللغة",
+  "settings.theme": "المظهر"
+}

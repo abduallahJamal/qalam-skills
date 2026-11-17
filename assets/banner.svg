@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="Qalam — Arabic-first skill pack for coding agents">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1220"/>
+      <stop offset="55%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#12224A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.03"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="0%" r="70%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#818CF8" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="340" fill="url(#bg)"/>
+  <rect width="1200" height="340" fill="url(#glow)"/>
+
+  <!-- grid texture -->
+  <g stroke="#ffffff" stroke-opacity="0.05" stroke-width="1">
+    <path d="M0 60H1200M0 120H1200M0 180H1200M0 240H1200M0 300H1200"/>
+    <path d="M60 0V340M240 0V340M420 0V340M600 0V340M780 0V340M960 0V340M1140 0V340"/>
+  </g>
+
+  <!-- Arabic wordmark: the pack's own name, low contrast, inside the safe area.
+       In RTL text-anchor="start" is the right edge, so the word grows leftward. -->
+  <text x="1152" y="150" text-anchor="start" font-family="'Segoe UI', 'Noto Naskh Arabic', 'Amiri', Tahoma, sans-serif"
+        font-size="112" font-weight="700" fill="#38BDF8" fill-opacity="0.12" direction="rtl">قلم</text>
+
+  <!-- reed-pen stroke: one diagonal line, background only -->
+  <g opacity="0.35">
+    <path d="M1198 8 L1104 232" stroke="url(#accent)" stroke-opacity="0.35" stroke-width="2"/>
+    <path d="M1198 8 L1136 212" stroke="#00E5FF" stroke-opacity="0.10" stroke-width="1.2"/>
+    <circle cx="1198" cy="8" r="3" fill="#22C55E" fill-opacity="0.55"/>
+  </g>
+
+  <!-- accent rule -->
+  <rect x="72" y="58" width="76" height="5" rx="2.5" fill="url(#accent)"/>
+
+  <text x="72" y="122" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="46" font-weight="800" fill="#F1F5F9">
+    qalam
+  </text>
+  <text x="216" y="120" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" font-weight="700" fill="#38BDF8" letter-spacing="1.2">
+    ARABIC-FIRST SKILL PACK · v1.0.0
+  </text>
+  <text x="72" y="166" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="19" fill="#94A3B8">
+    Nine portable skills for coding agents — translation, RTL, terminology, and a gate that computes
+  </text>
+
+  <!-- cards -->
+  <g font-family="Inter, 'Segoe UI', system-ui, sans-serif">
+    <g>
+      <rect x="72" y="210" width="248" height="90" rx="14" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.12"/>
+      <rect x="72" y="210" width="5" height="90" rx="2.5" fill="#00E5FF"/>
+      <text x="96" y="245" font-size="18" font-weight="700" fill="#E2E8F0">9 skills</text>
+      <text x="96" y="273" font-size="13" fill="#94A3B8">One SKILL.md folder each</text>
+    </g>
+    <g>
+      <rect x="342" y="210" width="248" height="90" rx="14" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.12"/>
+      <rect x="342" y="210" width="5" height="90" rx="2.5" fill="#818CF8"/>
+      <text x="366" y="245" font-size="18" font-weight="700" fill="#E2E8F0">qalam toolkit</text>
+      <text x="366" y="273" font-size="13" fill="#94A3B8">Stdlib Python · no network</text>
+    </g>
+    <g>
+      <rect x="612" y="210" width="248" height="90" rx="14" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.12"/>
+      <rect x="612" y="210" width="5" height="90" rx="2.5" fill="#A78BFA"/>
+      <text x="636" y="245" font-size="18" font-weight="700" fill="#E2E8F0">14-check gate</text>
+      <text x="636" y="273" font-size="13" fill="#94A3B8">Terminology · RTL · numerals</text>
+    </g>
+    <g>
+      <rect x="882" y="210" width="246" height="90" rx="14" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.12"/>
+      <rect x="882" y="210" width="5" height="90" rx="2.5" fill="#22C55E"/>
+      <text x="906" y="245" font-size="18" font-weight="700" fill="#E2E8F0">204 tests</text>
+      <text x="906" y="273" font-size="13" fill="#94A3B8">Offline, contract-tested</text>
+    </g>
+  </g>
+
+  <text x="72" y="326" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="13" fill="#64748B" letter-spacing="0.6">
+    Claude Code · Codex CLI · Cursor · OpenCode
+  </text>
+</svg>

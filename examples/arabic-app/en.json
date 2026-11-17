@@ -1,0 +1,15 @@
+{
+  "app.name": "Ledger",
+  "nav.dashboard": "Dashboard",
+  "nav.reports": "Reports",
+  "greeting": "Welcome back, {{name}}",
+  "cart.items": "{count, plural, one {# item} other {# items}}",
+  "files.selected": "{count, plural, one {# file selected} other {# files selected}}",
+  "error.network": "Could not reach the server. Check your connection and try again.",
+  "error.required": "This field is required",
+  "action.save": "Save",
+  "action.cancel": "Cancel",
+  "action.delete": "Delete",
+  "settings.language": "Language",
+  "settings.theme": "Theme"
+}

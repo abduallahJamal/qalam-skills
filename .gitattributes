@@ -1,0 +1,15 @@
+# Mark generated demo artefacts so GitHub Linguist reports source languages accurately
+demo/bad.ar.md linguist-generated=true
+demo/good.ar.md linguist-generated=true
+demo/work/** linguist-generated=true
+examples/preview.ar.html linguist-generated=true
+
+# Normalise line endings in source
+* text=auto eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.svg text eol=lf
+*.snippet text eol=lf
+
+# The shell entry point must stay LF so it runs on POSIX after a Windows clone
+bin/qalam text eol=lf
